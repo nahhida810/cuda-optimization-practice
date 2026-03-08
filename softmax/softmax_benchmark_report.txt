@@ -1,0 +1,28 @@
+Softmax Benchmark Report
+Device: NVIDIA GeForce RTX 4060 Laptop GPU
+Config: dtype=float32, warmup=40, iters=200, input_pool_size=8, triton_mode=autotune, triton_autotune_key=n_cols
+Shapes: (4096, 1024), (2048, 4096), (1024, 8192)
+
+Summary
+--------------------------------------------------------------------------------------------------------
+Provider            Avg Time (ms)       Max Error     Speedup(vs PyTorch)     Throughput (GEl/s)
+--------------------------------------------------------------------------------------------------------
+PyTorch CUDA               0.3097        0.00e+00                    1.00                  24.27
+CUDA                       0.3600        1.12e-08                    0.86                  19.56
+Triton Fused               0.3510        1.12e-08                    0.88                  19.47
+Triton Tiling              0.3076        7.45e-09                    1.01                  23.56
+--------------------------------------------------------------------------------------------------------
+
+Detail
+PyTorch CUDA       shape=(4096, 1024), time=0.1381 ms, err=0.00e+00, throughput=30.38 GEl/s
+CUDA               shape=(4096, 1024), time=0.2074 ms, err=1.12e-08, throughput=20.22 GEl/s
+Triton Fused       shape=(4096, 1024), time=0.2675 ms, err=1.12e-08, throughput=15.68 GEl/s
+Triton Tiling      shape=(4096, 1024), time=0.1559 ms, err=7.45e-09, throughput=26.91 GEl/s
+PyTorch CUDA       shape=(2048, 4096), time=0.3976 ms, err=0.00e+00, throughput=21.10 GEl/s
+CUDA               shape=(2048, 4096), time=0.4374 ms, err=3.73e-09, throughput=19.18 GEl/s
+Triton Fused       shape=(2048, 4096), time=0.3984 ms, err=3.73e-09, throughput=21.06 GEl/s
+Triton Tiling      shape=(2048, 4096), time=0.3821 ms, err=3.73e-09, throughput=21.96 GEl/s
+PyTorch CUDA       shape=(1024, 8192), time=0.3933 ms, err=0.00e+00, throughput=21.33 GEl/s
+CUDA               shape=(1024, 8192), time=0.4352 ms, err=1.40e-09, throughput=19.28 GEl/s
+Triton Fused       shape=(1024, 8192), time=0.3872 ms, err=1.40e-09, throughput=21.66 GEl/s
+Triton Tiling      shape=(1024, 8192), time=0.3848 ms, err=1.40e-09, throughput=21.80 GEl/s
